@@ -1,10 +1,10 @@
-(function(){
+(()=>{
   "use strict";
-  function getData(){ 
-    return $.getJSON("data.json");
+  let getData = ()=> { 
+    return $.getJSON("../src/data.json");
   }
-  $.when(getData()).then(function (data) {
-    var app = {
+  $.when(getData()).then((data)=> {
+    let app = {
       init: function(){
         this.$window = $(window);
         this.$wrapper = $('.wrapper');
@@ -17,7 +17,7 @@
         this.$startBtn.on('click', this.newPuzzle.bind(this));
         this.$window.on('resize',this.wrapperSet.bind(this));
       },
-      newPuzzle: function (){ console.log('start');
+      newPuzzle: function (){
         this.index = Math.floor(Math.random()*this.folders.length);
         this.puzzle = this.folders[this.index];
         this.allImages = this.puzzle.puzzle.images;
@@ -29,7 +29,7 @@
         this.wrapperWidth();
       },
       shuffle: function (array) {   //sfuffle images
-        var currentIndex = array.length, temporaryValue, randomIndex;
+        let currentIndex = array.length, temporaryValue, randomIndex;
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
           // Pick a remaining element...
@@ -43,10 +43,11 @@
         return array;
       },
       insertBox: function (){
-        for(var i = 0; i < this.finalImages.length; i++){
+        for(let i = 0; i < this.finalImages.length; i++){
           this.$wrapper.append(
-            '<div class = "box"><img src = "img/' + this.folder + '/'
-            + this.finalImages[i]+'.png" alt = "image"></div>'
+            `<div class = "box">
+              <img src = "img/${this.folder}/${this.finalImages[i]}.png" alt = "image">
+            </div>`
           );
         } 
         $( ".box" ).draggable(
@@ -67,8 +68,8 @@
         this.$wrapper.css("width",this.wrapperSize + 4 + "px");
       }
     };
-    //$(window).on("load", function() {
+    $(document).ready(()=> { 
       app.init();
-    //});
+    });
   });
 })();
